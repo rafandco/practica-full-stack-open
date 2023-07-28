@@ -15,7 +15,7 @@ console.log(nombre);
 ////////////////////////////////
 /*
 Tiene un total de 7 tipos primitivos (inmutables)
-    Numero
+    Número
     String
     Booleano
     undefined
