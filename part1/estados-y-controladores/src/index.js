@@ -51,18 +51,15 @@ const Hello2 = ({ name, age }) => {
   );
 };
 
-const App = () => {
-  //Desestructuración y funciones auxiliares
-  const name = "Peter";
-  const age = 10;
+const Events = () => {
   /*
-  Estados:
+  Estados y eventos:
   useState(0) devuelve una matriz de dos elementos:
   - en el primer elemento, counter, muestra el valor actual del contador,
     el cual se inicializa a 0
   - el segundo elemento, setCounter se trata de un método que nos permite actualizar el estado
   */
-  const [counter, setCounter] = useState(0); 
+  const [counter, setCounter] = useState(0);
   /*
   Otra forma de declararlo sería:
   const counter = useState(0)
@@ -76,22 +73,47 @@ const App = () => {
   La pregunta es, si se usa setTimeout, ¿cómo es que el contador se actualiza repetidas veces?
     - El contador se actualiza ya que cada vez que se llama a la función setCounter() se vuelve a renderizar la la componente
       Esto hace que se vuelva a ejecutar el cuerpo de la componente y se repita el proceso, pero incrementando el valor de counter
-  */  
+
   setTimeout(
      () => setCounter(counter + 1), 
       1000
     );
+  */
 
   //También podemos comprobar que lo que se renderiza coincide con la salida esperada
-  console.log("rendering...", counter);
+  //console.log("rendering...", counter);
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
+  return (
+    <div>
+      <h1>Events and States</h1>
+      <button onClick={handleClick}>Console counter</button>
+      {/*También se puede declara directamente la función  en el atributo*/}
+      <button onClick={() => console.log("clicked")}>
+        Console counter, function in attribute
+      </button>
+      {/*Y para que no solo quede reflejado en la consola, sino que también actualice el counter*/}
+      <button onClick={() => setCounter(counter + 1)}>Counter</button>
+      {/*Para resetear el contador necesitaremos establecer el parametro de setCounter a 0*/}
+      <button onClick={() => setCounter(0)}>Reset counter to zero</button>
+      <p>{counter}</p>
+    </div>
+  );
+};
+
+const App = () => {
+  //Desestructuración y funciones auxiliares
+  const name = "Peter";
+  const age = 10;
 
   return (
     <div>
       <h1>Greetings</h1>
       <Hello name="Maya" age={26 + 10} />
       <Hello2 name={name} age={age} />
-      <h1>Estados</h1>
-      <p>{counter}</p>
+      <Events />
     </div>
   );
 };
