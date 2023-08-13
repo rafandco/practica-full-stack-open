@@ -4,7 +4,7 @@ import "./index.css";
 //import para Hooks y estados
 import { useState } from "react";
 
-///////////////Funciones auxiliares del componente/////////////////
+//Funciones auxiliares del componente
 const Hello = (props) => {
   //Esto es una función dentro de otra. Calcula el año de nacimiento según la edad
   const bornYear = () => {
@@ -54,6 +54,7 @@ const Hello2 = ({ name, age }) => {
 const Events = () => {
   /*
   Estados y eventos:
+  (El lugar correcto para localizarlo seria en el componente App, pero se inicializará aquí para explicarlo mejor)
   useState(0) devuelve una matriz de dos elementos:
   - en el primer elemento, counter, muestra el valor actual del contador,
     el cual se inicializa a 0
@@ -88,7 +89,7 @@ const Events = () => {
 
   return (
     <div>
-      <h1>Events and States</h1>
+      <p>{counter}</p>
       <button onClick={handleClick}>Console counter</button>
       {/*También se puede declara directamente la función  en el atributo*/}
       <button onClick={() => console.log("clicked")}>
@@ -98,9 +99,20 @@ const Events = () => {
       <button onClick={() => setCounter(counter + 1)}>Counter</button>
       {/*Para resetear el contador necesitaremos establecer el parametro de setCounter a 0*/}
       <button onClick={() => setCounter(0)}>Reset counter to zero</button>
-      <p>{counter}</p>
     </div>
   );
+};
+
+/*
+Para introducir el concepto de pasar los estados a componentes hijos, crearemos el componente
+  - Display(para mostrar el contador)
+*/
+const Display = ({ counter1 }) => {
+  return <div>{counter1}</div>;
+};
+
+const Button = ({ handleClick, text }) => {
+  return <button onClick={handleClick}>{text}</button>;
 };
 
 const App = () => {
@@ -108,12 +120,25 @@ const App = () => {
   const name = "Peter";
   const age = 10;
 
+  //Para el componente display (realmente es el lugar correcto para ponerlo)
+  //IMPORTANTE, los hooks no pueden ir dentro de condicionales ni bucles
+  const [counter1, setCounter1] = useState(0);
+  const increaseBy1 = () => setCounter1(counter1 + 1);
+  const decreaseBy1 = () => setCounter1(counter1 - 1);
+  const setToZero = () => setCounter1(0);
+
   return (
     <div>
       <h1>Greetings</h1>
       <Hello name="Maya" age={26 + 10} />
       <Hello2 name={name} age={age} />
+      <h1>Events and States</h1>
       <Events />
+      <h1>State to child components</h1>
+      <Display counter1={counter1} />
+      <Button handleClick={increaseBy1} text="Increase" />
+      <Button handleClick={decreaseBy1} text="Decrease" />
+      <Button handleClick={setToZero} text="Set to 0" />
     </div>
   );
 };
