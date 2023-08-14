@@ -97,7 +97,7 @@ const Events = () => {
       </button>
       {/*Y para que no solo quede reflejado en la consola, sino que también actualice el counter*/}
       <button onClick={() => setCounter(counter + 1)}>Counter</button>
-      {/*Para resetear el contador necesitaremos establecer el parametro de setCounter a 0*/}
+      {/*Para resetear el contador necesitaremos establecer el parámetro de setCounter a 0*/}
       <button onClick={() => setCounter(0)}>Reset counter to zero</button>
     </div>
   );
@@ -106,14 +106,12 @@ const Events = () => {
 /*
 Para introducir el concepto de pasar los estados a componentes hijos, crearemos el componente
   - Display(para mostrar el contador)
+  - Button(para actualizar el estado)
 */
-const Display = ({ counter1 }) => {
-  return <div>{counter1}</div>;
-};
-
-const Button = ({ handleClick, text }) => {
-  return <button onClick={handleClick}>{text}</button>;
-};
+const Display = ({ counter1 }) => <div>{counter1}</div>;
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
+);
 
 const App = () => {
   //Desestructuración y funciones auxiliares
