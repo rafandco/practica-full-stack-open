@@ -3,6 +3,20 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { useState } from "react";
 
+
+const History = (props) => {
+  //Este componente renderiza de manera condicional, una pista en caso de que no se haya pulsado ningún botón
+  if (props.allClicks.length === 0) {
+    return <div>the app is used by pressing the buttons</div>;
+  }
+  //En caso de que la longitud de allClicks sea mayor que 0, muestra el historial
+  return <div>button press history: {props.allClicks.join(", ")}</div>;
+};
+
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}> {text} </button>
+);
+
 const App = () => {
   /*
   Ahora tenemos dos estados, uno para left y otro para right, se recomienda separar los estados (atomización)
@@ -11,7 +25,7 @@ const App = () => {
   const [left, setLeft] = useState(0);
   const [right, setRight] = useState(0);
 
-/*Sin embargo vamos a comprobar que ocurriría si tuviéramos un solo estado que almacenara un objeto
+  /*Sin embargo vamos a comprobar que ocurriría si tuviéramos un solo estado que almacenara un objeto
   const [clicks, setClicks] = useState({
     left: 0,
     right: 0,
@@ -46,25 +60,27 @@ const App = () => {
   //Volvemos a usar la forma recomendada para usar los estados, es decir la atomizada, no la formada por el objeto
   const [allClicks, setAll] = useState([]);
   const handleLeftClick = () => {
-    setLeft(left+1)
+    setLeft(left + 1);
     //Usamos .concat en vez de .push, ya que concat no muta a diferencia de push que si muta el array
-    setAll(allClicks.concat("L"))
-  }
+    setAll(allClicks.concat("L"));
+  };
   const handleRightClick = () => {
-    setRight(right+1)
-    setAll(allClicks.concat("R"))
-  }
+    setRight(right + 1);
+    setAll(allClicks.concat("R"));
+  };
 
   return (
     <div>
       {left}
-      <button onClick={handleLeftClick}>left</button>
-      <button onClick={handleRightClick}>right</button>
+      <Button onClick={handleLeftClick} text="left" />{" "}
+      <Button onClick={handleRightClick} text="right" />
       {right}
       {/* El método join() une todos los elementos de un array, en una cadena separando los elementos, con los caracteres pasados como parámetros
           en este caso ", "
+          <p>{allClicks.join(", ")}</p>
       */}
-      <p>{allClicks.join(", ")}</p> 
+      {/*History gestiona el renderizado condicional del historial*/}
+      <History allClicks={allClicks} />
     </div>
   );
 };
